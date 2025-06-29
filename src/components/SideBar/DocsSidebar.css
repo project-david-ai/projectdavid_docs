@@ -1,0 +1,49 @@
+/* src/components/SideBar/DocsSidebar.css */
+
+.docs-sidebar {
+  width: 280px; /* A bit wider for better spacing */
+  flex-shrink: 0;
+  background-color: #101828; /* Dark blue/black background */
+  color: #eaecf0; /* Light gray text */
+  padding: 24px 16px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto; /* Allow scrolling if content is too long */
+}
+
+.sidebar-group {
+  margin-bottom: 24px; /* Space between groups */
+}
+
+.sidebar-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: #98a2b3; /* Lighter gray for headers */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+  padding: 0 8px;
+}
+
+.sidebar-link {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #eaecf0; /* Default link color */
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-link:hover {
+  background-color: #344054; /* Hover background */
+}
+
+/* This is the magic: the .active class is added by NavLink */
+.sidebar-link.active {
+  background-color: #344054; /* Active background */
+  color: #ffffff; /* Brighter white for active text */
+  font-weight: 600;
+}

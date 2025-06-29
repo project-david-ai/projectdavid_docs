@@ -1,0 +1,52 @@
+@import "@fontsource/inter";
+@import "@fontsource/orbitron";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Global Typography ─────────────────────────── */
+html, body {
+  /* White everywhere except sections that override it */
+  background: white;      /* ← switched from black to white */
+  color: black;           /* default body text */
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: sans-serif;  /* heading font */
+  letter-spacing: 0.025em;
+}
+
+p {
+  line-height: 1.6;
+  color: #d1d5db; /* text-gray-300 on dark; looks fine on white */
+}
+
+a {
+  color: #4ade80;         /* green-400 */
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color .2s;
+}
+a:hover {
+  color: #86efac;         /* green-300 */
+}
+
+/* ── Pulse Animation ──────────────────────────── */
+@keyframes pulse {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 0.4;
+  }
+}
+
+.pulse80s {
+  animation: pulse 5s ease-in-out infinite;
+}

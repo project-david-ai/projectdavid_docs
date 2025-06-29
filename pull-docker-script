@@ -1,0 +1,22 @@
+###############################################################################
+# 0)  One-time only: install & enable Docker (if you haven’t already)
+###############################################################################
+sudo yum -y update
+sudo amazon-linux-extras install docker
+sudo systemctl enable --now docker            # starts Docker + auto-start on boot
+sudo usermod -aG docker ec2-user              # run Docker w/out sudo next login
+# <-- log out & back in (or `newgrp docker`) so the group takes effect ---------
+
+###############################################################################
+# 1)  Log in to Docker Hub **with a Personal Access Token** (PAT)
+#     –> create one in Docker Hub:  “Account ▸ Security ▸ New Access Token”
+###############################################################################
+docker login -u thanosprime
+# Password:  <paste the PAT here – NOT your account password>
+# dckr_pat_bJOKjkPtrEHgIiU-ZRInr0lEooc
+###############################################################################
+# 2)  Pull & run the private image you just pushed from GitHub CI
+###############################################################################
+IMAGE="thanosprime/entities-landing:latest"   # or  :1.2.3  etc.
+docker pull $IMAGE
+docker run -d --name landing -p 80:80 $IMAGE  # adjust ports if you need 3000 etc.

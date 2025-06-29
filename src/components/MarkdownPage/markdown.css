@@ -1,0 +1,39 @@
+/* ───────────────────────────────────────────────────────────────
+   Markdown column – shared by every .md page
+──────────────────────────────────────────────────────────────── */
+.markdown-body {
+  max-width: 960px;              /* identical to CodePanel width  */
+  margin: 2.5rem auto;           /* centred on the page           */
+  padding: 0 1rem;               /* mobile breathing room         */
+
+  font-family: Inter, ui-sans-serif, system-ui;
+  line-height: 1.65;
+  color: #374151;                /* gray-700 body text (dark)     */
+}
+
+
+/* Paragraphs */
+.markdown-body p {
+  color: #111827;        /* same dark shade as headings */
+}
+
+/* Headings */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 {
+  color: #111827;                /* gray-900, almost black        */
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Links */
+.markdown-body a {
+  color: #3b82f6;                /* blue-500                      */
+  text-decoration: none;
+}
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+
