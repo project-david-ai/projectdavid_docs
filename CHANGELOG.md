@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/frankie336/projectdavid_docs/compare/v1.0.0...v1.1.0) (2025-07-02)
+
+
+### Features
+
+* Fix href issue on dynamic routes ([10cf7c7](https://github.com/frankie336/projectdavid_docs/commit/10cf7c79936b2771af9d47ae5453bc8b549ab586))
+
 # 1.0.0 (2025-07-02)
 
 
