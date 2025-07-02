@@ -1,25 +1,29 @@
 // src/pages/DocPage.jsx
-import { useParams } from 'react-router-dom';
-import { pages } from '../../lib/docs.js';
 
-// Import our two layout components
+import { useParams } from 'react-router-dom';
+import { pages } from '../../lib/docs.js'; // Make sure this path is correct
+
 import MarkdownPage from '../../components/MarkdownPage/MarkdownPage.jsx';
 import ApiReferencePage from './ApiReferencePage.jsx';
 
 export default function DocPage() {
-  const { slug = 'index' } = useParams();
+  // The default value is no longer strictly necessary but doesn't hurt.
+  const { slug } = useParams();
+
+  // If slug is undefined (which it shouldn't be for this route), handle it.
+  if (!slug) {
+    return <div>404 - Invalid Page Route</div>;
+  }
+
   const pageData = pages[slug];
 
   if (!pageData) {
-    // A more robust check for both missing page and missing frontmatter
-    return <div>404 - Page Not Found</div>;
+    return <div>404 - Page Not Found for slug: {slug}</div>;
   }
 
-  // Check the frontmatter and render the correct layout component
-  if (pageData.frontmatter && pageData.frontmatter.layout === 'api') {
+  if (pageData.frontmatter?.layout === 'api') {
     return <ApiReferencePage pageData={pageData} />;
   }
 
-  // Default to the standard single-column layout
   return <MarkdownPage content={pageData.content} />;
 }

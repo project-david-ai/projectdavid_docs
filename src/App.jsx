@@ -1,5 +1,5 @@
 // src/App.jsx
-import React           from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,8 +8,8 @@ import {
 } from 'react-router-dom';
 
 import DocsLayout from './docsLayout';
-import DocPage    from './pages/common/DocPage.jsx';
-import DocsHub    from './pages/common/DocsHub.jsx';
+import DocPage from './pages/common/DocPage.jsx';
+import DocsHub from './pages/common/DocsHub.jsx';
 
 export default function App() {
   return (
@@ -20,14 +20,23 @@ export default function App() {
 
         {/*  /docs hierarchy  ------------------------------------------------ */ }
         <Route path="/docs" element={<DocsLayout />}>
-          {/* Hub (cards) */}
+          {/* Hub (cards) - Renders at /docs */}
           <Route index element={<DocsHub />} />
 
-          {/* ----  DIRECT “nice” routes  ---- */}
-          <Route path="entities-api"   element={<DocPage />} />    {/* Entities API / SDK */}
-          <Route path="infrastructure" element={<DocPage />} />    {/* Infra docs       */}
+          {/* ---- REMOVED REDUNDANT STATIC ROUTES ---- */}
+          {/*
+            These routes were causing the issue because they don't pass a "slug"
+            parameter to the DocPage component.
+          */}
+          {/* <Route path="entities-api"   element={<DocPage />} /> */}
+          {/* <Route path="infrastructure" element={<DocPage />} /> */}
 
-          {/* ----  fallback: any other slug  ---- */}
+          {/* ---- CONSOLIDATED DYNAMIC ROUTE ---- */}
+          {/*
+            This single route now handles all document pages like
+            /docs/entities-api and /docs/infrastructure. The "slug" from the URL
+            (e.g., "entities-api") is passed to DocPage via the useParams() hook.
+          */}
           <Route path=":slug" element={<DocPage />} />
         </Route>
       </Routes>

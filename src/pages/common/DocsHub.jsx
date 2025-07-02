@@ -1,23 +1,18 @@
 import { Link } from 'react-router-dom';
-import logoBW from '../../assets/logo/logo-entities-black-and-white.png'; // ⬅ adjust if your relative path differs
+import logoBW from '../../assets/logo/logo-entities-black-and-white.png';
 import './DocsHub.css';
-
-// Prefer Vite-style env first, then CRA‑style, then plain process.env, then fallback
-const BASE_URL =
-  import.meta.env?.VITE_BASE_URL ||
-  process.env?.REACT_APP_BASE_URL ||
-  process.env?.BASE_URL ||
-  'http://localhost:5174';
 
 export default function DocsHub() {
   const cards = [
     {
-      href: `${BASE_URL}/docs/api-index`,
+      // Use relative paths instead of absolute URLs
+      href: '/docs/api-index',
       title: 'Entities API + SDK',
       blurb: 'Build with the Entities API REST endpoints and SDKs',
     },
     {
-      href: `${BASE_URL}/docs/infra-index`,
+      // Use relative paths instead of absolute URLs
+      href: '/docs/infra-index',
       title: 'Infrastructure Guide',
       blurb:
         'Hands-on guide to running the Entities API in your own environment. Fork the repo, ' +
