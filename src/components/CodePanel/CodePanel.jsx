@@ -7,6 +7,7 @@ import python from 'highlight.js/lib/languages/python';
 import bash   from 'highlight.js/lib/languages/bash';
 import yaml   from 'highlight.js/lib/languages/yaml';
 import json   from 'highlight.js/lib/languages/json';
+import plaintext   from 'highlight.js/lib/languages/plaintext';
 
 import 'highlight.js/styles/github-dark.css';   // syntax colours
 import './codepanel.css';               // custom layout
@@ -16,6 +17,7 @@ hljs.registerLanguage('python', python);
 hljs.registerLanguage('bash',    bash);
 hljs.registerLanguage('yaml',    yaml);
 hljs.registerLanguage('json',    json);
+hljs.registerLanguage('plaintext',    plaintext);
 
 /* --------------------------------------------------------------------- */
 export default function CodePanel({

@@ -1,0 +1,95 @@
+/* ──────────────────────────────────────────────────────────────
+   Row-pair grid  ▸  full-page scroll  ▸  hidden inline scrollbars
+   ──────────────────────────────────────────────────────────── */
+
+/* ----------  Outer wrapper (stacks rows)  ---------- */
+.api-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+
+  width: 90%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ----------  Each row: markdown | code  ---------- */
+.api-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 4rem;
+
+  /* keep both cells top-aligned so the code panel never stretches */
+  align-items: start;
+}
+
+/* ----------  Markdown (left)  ---------- */
+.api-markdown {
+  line-height: 1.65;
+}
+
+/* Headings */
+.api-markdown h1,
+.api-markdown h2,
+.api-markdown h3 {
+  color: #111827;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.api-markdown h1 { font-size: 2.25rem; margin-top: 0; }
+
+/* Section sub-heading */
+.api-markdown h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin-top: 2.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+/* Normal paragraphs – now dark for readability */
+.api-markdown p {
+  color: #111827;
+  margin: 0 0 1rem;
+}
+
+/* Tables */
+.api-markdown table      { width: 100%; margin-top: 1rem; border-collapse: collapse; }
+.api-markdown th,
+.api-markdown td         { text-align: left; padding: 0.75rem; border-bottom: 1px solid #e5e7eb; }
+.api-markdown th         { font-weight: 600; font-size: 0.875rem; }
+.api-markdown td code    { background: #f3f4f6; padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.8rem; }
+
+/* ----------  Code panel (right)  ---------- */
+.code-panel {
+  width: 100%;
+  margin: 0 0 2rem 0;
+  align-self: start;                /* never stretch */
+}
+
+.code-body {
+  overflow-x: auto;
+  word-break: normal;
+}
+
+/* Hide inline scrollbar chrome but keep functionality */
+.code-body::-webkit-scrollbar       { height: 6px; }
+.code-body::-webkit-scrollbar-track { background: transparent; }
+.code-body::-webkit-scrollbar-thumb { background: #6b7280; border-radius: 3px; }
+
+.code-body {
+  scrollbar-width: thin;            /* Firefox */
+  scrollbar-color: #6b7280 transparent;
+}
+
+/* ----------  Responsive (≤1280 px → single column)  ---------- */
+@media (max-width: 1280px) {
+  .api-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+}

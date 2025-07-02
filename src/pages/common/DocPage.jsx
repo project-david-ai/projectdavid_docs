@@ -1,10 +1,10 @@
 // src/pages/DocPage.jsx
 import { useParams } from 'react-router-dom';
-import { pages } from '../lib/docs';
+import { pages } from '../../lib/docs.js';
 
 // Import our two layout components
-import MarkdownPage from '..//components//MarkdownPage/MarkdownPage';
-import ApiReferencePage from './ApiReferencePage';
+import MarkdownPage from '../../components/MarkdownPage/MarkdownPage.jsx';
+import ApiReferencePage from './ApiReferencePage.jsx';
 
 export default function DocPage() {
   const { slug = 'index' } = useParams();

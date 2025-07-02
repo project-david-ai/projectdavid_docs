@@ -1,0 +1,94 @@
+/* ──────────────────────────────────────────────────────────────
+   DocsHub.css
+   Clean, non-redundant card grid (Material-3–inspired)
+   ──────────────────────────────────────────────────────────── */
+
+/* ----------  Outer section  ---------- */
+.docs-hub {
+  width: 90%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.docs-hub__title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: #111827;
+}
+
+/* ----------  Card grid  ---------- */
+.docs-hub__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem;
+}
+
+/* ----------  Card  ---------- */
+.docs-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* icon / logo centred */
+  text-align: left;         /* headline + copy rag-left for readability */
+  padding: 2rem 1.75rem;    /* generous insets */
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  text-decoration: none;
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.docs-card:hover,
+.docs-card:focus-visible {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ----------  Logo / icon  ---------- */
+.docs-card__logo {
+  width: 56px;              /* ≈ 20–25 % of a typical card width */
+  height: auto;
+  margin: 0 auto 1rem;      /* centred, space below */
+  filter: grayscale(100%);  /* guarantee pure B/W */
+  opacity: 0.9;
+  transition: transform 0.2s ease;
+}
+
+.docs-card:hover .docs-card__logo {
+  transform: scale(1.05);   /* subtle lift on hover */
+}
+
+/* Leave the emoji slot in case a card keeps an inline icon */
+.docs-card__icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+/* ----------  Text  ---------- */
+.docs-card__heading {
+  align-self: stretch;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+  color: #111827;
+}
+
+.docs-card__blurb {
+  align-self: stretch;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #374151;
+  margin: 0;
+}
+
+/* ----------  Accessibility: touch devices  ---------- */
+@media (hover: none) {
+  .docs-card:hover,
+  .docs-card:hover .docs-card__logo {
+    box-shadow: none;
+    transform: none;
+  }
+}

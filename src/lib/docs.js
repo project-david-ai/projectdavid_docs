@@ -1,75 +1,67 @@
-// src/lib/docs.js
+/* ──────────────────────────────────────────────────────────────
+   src/lib/docs.js
+   – collect markdown pages, expose `pages` map + grouped nav list
+   – now supports explicit slug + optional nav_exclude
+   ──────────────────────────────────────────────────────────── */
 
 const categoryDisplayNames = {
-  'get-started': 'GET STARTED',
-  'core-concepts': 'CORE CONCEPTS',
-  'api-guides': 'API GUIDES',
+  'get-started'   : 'GET STARTED',
+  'core-concepts' : 'CORE CONCEPTS',
+  'api-guides'    : 'API GUIDES',
 };
 
-/**
- * A simple, dependency-free frontmatter parser.
- * Replaces the 'gray-matter' library to avoid browser/Vite compatibility issues.
- * @param {string} rawContent The raw string content of a markdown file.
- * @returns {{data: object, content: string}}
- */
-function simpleMatter(rawContent) {
-  const frontmatterRegex = /^---\r?\n([\s\S]+?)\r?\n---\r?\n/;
-  const match = frontmatterRegex.exec(rawContent);
+/* ----------  tiny front-matter parser (keeps bundle slim)  ---------- */
+function simpleMatter(raw) {
+  const fm = /^---\r?\n([\s\S]+?)\r?\n---\r?\n/;
+  const m  = fm.exec(raw);
+  if (!m) return { data: {}, content: raw };
 
-  if (!match) {
-    return { data: {}, content: rawContent };
-  }
-
-  const frontmatterBlock = match[1];
-  const content = rawContent.slice(match[0].length);
   const data = {};
-
-  frontmatterBlock.split('\n').forEach(line => {
-    const parts = line.split(':');
-    if (parts.length >= 2) {
-      const key = parts[0].trim();
-      const value = parts.slice(1).join(':').trim();
-      data[key] = value;
-    }
+  m[1].split('\n').forEach(line => {
+    const i = line.indexOf(':');
+    if (i > -1) data[line.slice(0, i).trim()] = line.slice(i + 1).trim();
   });
-
-  return { data, content };
+  return { data, content: raw.slice(m[0].length) };
 }
 
+/* ----------  1. grab every .md file (eager for build-time)  ---------- */
+const mdModules = import.meta.glob('../pages/**/*.md', { as: 'raw', eager: true });
 
-/* ── 1. Discover all .md files ────────────────────────────────── */
-const pageModules = import.meta.glob('../pages/**/*.md', { as: 'raw', eager: true });
+/* ----------  2. build the main { slug: { frontmatter, content } } map  ---------- */
+export const pages = Object.entries(mdModules).reduce((acc, [path, raw]) => {
+  const { data, content } = simpleMatter(raw);
 
+  // explicit slug > filename fallback
+  const slug = (data.slug || path.split('/').pop().replace('.md', '')).trim();
 
-/* ── 2. Parse frontmatter and content for each page ───────────── */
-export const pages = Object.entries(pageModules).reduce((acc, [path, rawContent]) => {
-  const { data, content } = simpleMatter(rawContent); // 👈 Use our custom parser
-  const slug = path.split('/').pop().replace('.md', '');
   acc[slug] = { frontmatter: data, content };
   return acc;
 }, {});
 
+/* ----------  3. sidebar / grouped nav items  ------------------------ */
+export const groupedNavItems = {};
 
-/* ── 3. Create a grouped list for the sidebar ─────────────────── */
-export const groupedNavItems = Object.keys(pageModules).reduce((acc, path) => {
-    const pathParts = path.split('/');
-    const category = pathParts[pathParts.length - 2];
-    const slug = pathParts.pop().replace('.md', '');
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    const navItem = {
-      slug,
-      route: slug === 'index' ? `/docs/${category}` : `/docs/${slug}`,
-      label: (slug === 'index' ? 'Overview' : slug)
-        .replace(/-/g, ' ')
-        .replace(/\b\w/g, (c) => c.toUpperCase()),
-    };
-    acc[category].push(navItem);
-    return acc;
-}, {});
+Object.entries(mdModules).forEach(([path, raw]) => {
+  const { data } = simpleMatter(raw);
+  if (data.nav_exclude === 'true') return;          // hide from sidebar if asked
 
-// Sort items
-Object.values(groupedNavItems).forEach(items => {
-    items.sort((a, b) => a.label.localeCompare(b.label));
+  const slug  = (data.slug || path.split('/').pop().replace('.md', '')).trim();
+  const parts = path.split('/');
+  const category = data.category || parts[parts.length - 2]; // parent folder
+
+  if (!groupedNavItems[category]) groupedNavItems[category] = [];
+
+  groupedNavItems[category].push({
+    slug,
+    route: `/docs/${slug}`,
+    label:
+      data.title
+        ? data.title.replace(/<[^>]+>/g, '')         // strip any markup
+        : slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+  });
 });
+
+/* tidy alphabetical order within each category */
+Object.values(groupedNavItems).forEach(arr =>
+  arr.sort((a, b) => a.label.localeCompare(b.label))
+);
