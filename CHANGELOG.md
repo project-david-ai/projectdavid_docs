@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/frankie336/projectdavid_docs/compare/v1.2.0...v1.2.1) (2025-07-03)
+
+
+### Bug Fixes
+
+* ApiReferencePage.css and markdown.css clean up for mobile interactive views. ([1c2a5d2](https://github.com/frankie336/projectdavid_docs/commit/1c2a5d26b067d8ba3336ba91025c58a60cb653b2))
+
 # [1.2.0](https://github.com/frankie336/projectdavid_docs/compare/v1.1.0...v1.2.0) (2025-07-03)
 
 
