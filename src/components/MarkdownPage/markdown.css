@@ -37,3 +37,76 @@
 }
 
 
+/* ============================================================
+   Mobile fallback: contain every block inside the viewport
+   and give it its own scroll / wrap behaviour.
+   ============================================================ */
+@media (max-width: 640px) {
+
+  /* 1️⃣  Reduce the usable text column to ~92 % of screen */
+  .markdown-body {
+    width: 92vw;          /* keep brown background visible */
+    max-width: 92vw;
+    margin: 0 auto;       /* centre the reduced column     */
+    padding: 0;           /* padding handled by width      */
+  }
+
+  /* 2️⃣  Force code blocks & tables to behave */
+  .markdown-body pre,
+  .markdown-body table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;           /* swipe left/right if wide */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 3️⃣  Soft-wrap long tokens everywhere */
+  .markdown-body,
+  .markdown-body table,
+  .markdown-body code,
+  .markdown-body pre,
+  .markdown-body td,
+  .markdown-body th {
+    word-break: break-word;     /* break super-long IDs / URLs */
+    white-space: pre-wrap;      /* keep code readable           */
+  }
+}
+/* ============================================================
+   Mobile tables: keep columns readable, let user scroll
+   ============================================================ */
+@media (max-width:640px){
+
+  /* 1️⃣  Make each Markdown table its own scroll container  */
+  .markdown-body table{
+    display:block;               /* detaches from normal flow   */
+    width:auto;                  /* shrink-to-fit natural width */
+    max-width:none;              /* no forced 100 %             */
+    overflow-x:auto;             /* enable swipe scroll         */
+    -webkit-overflow-scrolling:touch;
+    border-collapse:collapse;    /* keeps existing styling      */
+  }
+
+  /* 2️⃣  Prevent cell text from hard-wrapping */
+  .markdown-body th,
+  .markdown-body td{
+    white-space:nowrap;          /* one word per cell line      */
+    word-break:normal;           /* restore default behaviour   */
+  }
+
+  /* 3️⃣  Optional: trim font a bit for narrow view */
+  .markdown-body th,
+  .markdown-body td{
+    font-size:0.9rem;            /* or remove if you prefer     */
+  }
+}
+@media (max-width:640px){
+
+  /* … existing mobile-table rules … */
+
+  /*  ✅  Preserve explicit line breaks in cells  */
+  .markdown-body th,
+  .markdown-body td{
+    white-space: pre-line;   /* keep \n, wrap at spaces           */
+    word-break: break-word;  /* break very-long URLs if required  */
+  }
+}

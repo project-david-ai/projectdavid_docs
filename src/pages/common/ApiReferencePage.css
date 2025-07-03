@@ -1,33 +1,32 @@
-/* ──────────────────────────────────────────────────────────────
-   Row-pair grid  ▸  full-page scroll  ▸  hidden inline scrollbars
-   ──────────────────────────────────────────────────────────── */
+/* =========================================================================
+   API Reference Layout
+   ─ Desktop: two-column         ─ Tablet: stacked         ─ Mobile: stacked
+   ========================================================================= */
 
-/* ----------  Outer wrapper (stacks rows)  ---------- */
+/* ----------  Outer wrapper  ---------- */
 .api-grid {
+  /* flex container so each “row” is vertically spaced */
   display: flex;
   flex-direction: column;
   gap: 4rem;
 
+  /* centred card on wide screens */
   width: 90%;
   max-width: 1280px;
   margin: 0 auto;
   padding: 1rem;
 }
 
-/* ----------  Each row: markdown | code  ---------- */
+/* ----------  Row (desktop): Markdown │ Code ---------- */
 .api-row {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   gap: 4rem;
-
-  /* keep both cells top-aligned so the code panel never stretches */
-  align-items: start;
+  align-items: start;   /* top-align cells so code-panel never stretches */
 }
 
-/* ----------  Markdown (left)  ---------- */
-.api-markdown {
-  line-height: 1.65;
-}
+/* ----------  Markdown cell  ---------- */
+.api-markdown { line-height: 1.65; }
 
 /* Headings */
 .api-markdown h1,
@@ -37,10 +36,9 @@
   font-weight: 700;
   margin-bottom: 1rem;
 }
-
 .api-markdown h1 { font-size: 2.25rem; margin-top: 0; }
 
-/* Section sub-heading */
+/* Section sub-head */
 .api-markdown h3 {
   font-size: 1rem;
   text-transform: uppercase;
@@ -51,11 +49,8 @@
   padding-bottom: 0.5rem;
 }
 
-/* Normal paragraphs – now dark for readability */
-.api-markdown p {
-  color: #111827;
-  margin: 0 0 1rem;
-}
+/* Paragraphs */
+.api-markdown p { color: #111827; margin: 0 0 1rem; }
 
 /* Tables */
 .api-markdown table      { width: 100%; margin-top: 1rem; border-collapse: collapse; }
@@ -64,32 +59,70 @@
 .api-markdown th         { font-weight: 600; font-size: 0.875rem; }
 .api-markdown td code    { background: #f3f4f6; padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.8rem; }
 
-/* ----------  Code panel (right)  ---------- */
-.code-panel {
-  width: 100%;
-  margin: 0 0 2rem 0;
-  align-self: start;                /* never stretch */
-}
+/* ----------  CodePanel cell  ---------- */
+.code-panel { width: 100%; margin: 0 0 2rem 0; }
+.code-body  { overflow-x: auto; word-break: normal; }
 
-.code-body {
-  overflow-x: auto;
-  word-break: normal;
-}
-
-/* Hide inline scrollbar chrome but keep functionality */
+/* subtle thumb */
 .code-body::-webkit-scrollbar       { height: 6px; }
 .code-body::-webkit-scrollbar-track { background: transparent; }
 .code-body::-webkit-scrollbar-thumb { background: #6b7280; border-radius: 3px; }
+.code-body { scrollbar-width: thin; scrollbar-color: #6b7280 transparent; }
 
-.code-body {
-  scrollbar-width: thin;            /* Firefox */
-  scrollbar-color: #6b7280 transparent;
+/* ===========================  Responsive  =========================== */
+
+/* ------- Tablet ( ≤ 1024 px ) – single column ----------------------- */
+@media (max-width: 1024px) {
+  .api-row { grid-template-columns: minmax(0, 1fr); gap: 3rem; }
 }
 
-/* ----------  Responsive (≤1280 px → single column)  ---------- */
-@media (max-width: 1280px) {
-  .api-row {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.5rem;
+/* ------- Mobile ( ≤ 640 px ) --------------------------------------- */
+@media (max-width: 640px) {
+  /* 1️⃣  Narrow centred column with slim side gutters (~3 % each) */
+  .api-grid {
+    width: 94vw;          /* 100 vw minus ~3 % margin each side   */
+    max-width: none;
+    padding: 0.75rem 0;   /* vertical breathing room              */
+    margin: 0 auto;
   }
+
+  /* 2️⃣  Tighter vertical spacing */
+  .api-row { gap: 2rem; }
+
+  /* 3️⃣  Heading scale */
+  .api-markdown h1 { font-size: 1.5rem; }
+  .api-markdown h2 { font-size: 1.25rem; }
+  .api-markdown h3 { font-size: 1.05rem; }
+
+  /* 4️⃣  Code & pre blocks align with column, soft radius */
+  .code-panel,
+  .api-markdown pre {
+    margin: 1rem 0;        /* inside gutters                       */
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+  }
+
+  /* 5️⃣  Tables remain readable via horizontal scroll */
+  .api-markdown table {
+    display: block;
+    width: auto;           /* natural width, not forced 100 %      */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .api-markdown th,
+  .api-markdown td { white-space: nowrap; }
+}
+
+/* ------- Narrow phones ( ≤ 480 px ) -------------------------------- */
+@media (max-width: 480px) {
+  /* even smaller gutters */
+  .api-grid { width: 96vw; padding: 0.5rem 0; }
+
+  /* further heading & code shrink to avoid wrap */
+  .api-markdown h1 { font-size: 1.35rem; }
+  .api-markdown h2 { font-size: 1.15rem; }
+  .api-markdown h3 { font-size: 1rem;  }
+
+  .code-body { font-size: 0.8rem; }
+  .api-row   { gap: 1.5rem; }
 }

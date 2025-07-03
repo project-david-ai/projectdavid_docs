@@ -1,49 +1,96 @@
-/* src/components/SideBar/DocsSidebar.css */
-
+/* ===============  Desktop baseline  =============================== */
 .docs-sidebar {
-  width: 280px; /* A bit wider for better spacing */
+  width: 280px;
   flex-shrink: 0;
-  background-color: #101828; /* Dark blue/black background */
-  color: #eaecf0; /* Light gray text */
+  background: #101828;
+  color: #eaecf0;
   padding: 24px 16px;
   height: 100vh;
   position: sticky;
   top: 0;
-  overflow-y: auto; /* Allow scrolling if content is too long */
+  overflow-y: auto;
+  transition: transform 240ms ease;
 }
 
-.sidebar-group {
-  margin-bottom: 24px; /* Space between groups */
-}
-
+/* -------- Layout inside the sidebar -------- */
+.sidebar-group  { margin-bottom: 24px; }
 .sidebar-header {
-  font-size: 12px;
-  font-weight: 600;
-  color: #98a2b3; /* Lighter gray for headers */
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 12px;
+  font: 600 12px/1 'Inter', sans-serif;
+  color: #98a2b3;
+  letter-spacing: .05em;
+  margin: 0 0 12px;
   padding: 0 8px;
+  text-transform: uppercase;
 }
-
-.sidebar-link {
+.sidebar-link   {
   display: block;
-  font-size: 14px;
-  font-weight: 500;
-  color: #eaecf0; /* Default link color */
+  font: 500 14px/1.4 'Inter', sans-serif;
+  color: #eaecf0;
   padding: 8px 12px;
   border-radius: 6px;
   text-decoration: none;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color .15s;
+}
+.sidebar-link:hover  { background: #344054; }
+.sidebar-link.active { background: #344054; color: #fff; font-weight: 600; }
+
+/* ===============  Mobile adaptations  ============================= */
+
+/* Burger button – visible only below 768 px */
+.docs-burger {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1100;
+  background: #101828;
+  border: 1px solid #344054;
+  color: #eaecf0;
+  padding: 6px 7px;
+  border-radius: 6px;
+  display: none;                 /* hidden on desktop */
 }
 
-.sidebar-link:hover {
-  background-color: #344054; /* Hover background */
+/* Close (X) button – default hidden */
+.sidebar-close { display: none; }
+
+@media (max-width: 767px) {
+  .docs-burger { display: inline-flex; }
+
+  /* Sidebar becomes off-canvas drawer */
+  .docs-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: 1200;
+  }
+  .docs-sidebar.sidebar--open {
+    transform: translateX(0);
+  }
+
+  /* Close (X) button inside drawer */
+  .sidebar-close {
+    display: block;              /* 👈 visible only on mobile */
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: none;
+    border: none;
+    color: #eaecf0;
+  }
+
+  /* Backdrop */
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.4);
+    backdrop-filter: blur(1px);
+    z-index: 1150;
+  }
 }
 
-/* This is the magic: the .active class is added by NavLink */
-.sidebar-link.active {
-  background-color: #344054; /* Active background */
-  color: #ffffff; /* Brighter white for active text */
-  font-weight: 600;
+/* Disable hover transitions for touch devices */
+@media (hover: none) {
+  .sidebar-link:hover { background: none; }
 }
