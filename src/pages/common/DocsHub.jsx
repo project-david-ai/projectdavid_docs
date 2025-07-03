@@ -1,3 +1,4 @@
+//src/pages/common/DocsHub.jsx
 import { Link } from 'react-router-dom';
 import logoBW from '../../assets/logo/logo-entities-black-and-white.png';
 import './DocsHub.css';
