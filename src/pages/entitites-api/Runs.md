@@ -1,17 +1,18 @@
 ---
 layout: api
-title: Messages
+title: Runs
 ---
 
-
-Messages represent a structured dialogue between roles (e.g., system, user, assistant). 
-Each message includes role metadata and content. The full message sequence is serialized, 
-tokenized, and passed into the model as context, enabling it to generate a response based on the 
-entire conversation; typically in reaction to the latest user input.
+A Run is a state-aware envelope that orchestrates one end-to-end interaction between an assistant and a thread.
+The Run object serves multiple purposes in:
+- Execution scaffold
+- Lifecycle tracker
+- Control surface
+- Telemetry & billing
 
 ---
 
-### Create message
+### Create Run
 
 ### Request body
 |                                                                                                                                                                                                                                                                                                                                      |

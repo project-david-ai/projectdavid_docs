@@ -7,8 +7,8 @@ export default function ApiReferencePage({ pageData }) {
   const { frontmatter, content } = pageData;
 
   /* ── 1. Split markdown into TEXT / CODE segments ─────────────────────── */
-  const codeRegex   = /^```(\w*)\r?\n([\s\S]*?)\r?\n```/gm;
-  const segments    = [];                       // { type: 'text'|'code', data }
+  const codeRegex = /^```(\w*)\r?\n([\s\S]*?)\r?\n```/gm;
+  const segments  = [];                 // { type: 'text' | 'code', data }
   let lastIdx = 0, match;
 
   for (match of content.matchAll(codeRegex)) {
@@ -23,28 +23,31 @@ export default function ApiReferencePage({ pageData }) {
   const tail = content.slice(lastIdx);
   if (tail.trim()) segments.push({ type: 'text', data: tail });
 
-  /* ── 2. Combine segments into rows: text (left) + optional code (right) ─ */
+  /* ── 2. Combine segments into rows: text + request + optional response ─ */
   const rows = [];
   for (let i = 0; i < segments.length; i++) {
     const seg = segments[i];
 
     if (seg.type === 'text') {
-      // Look ahead: if the next segment is code, pair them.
-      const next = segments[i + 1];
-      if (next && next.type === 'code') {
-        rows.push({ text: seg.data, code: next.data });
-        i++;                          // Skip the code we just consumed
+      const next     = segments[i + 1];
+      const nextNext = segments[i + 2];
+
+      if (next?.type === 'code' && nextNext?.type === 'code') {
+        rows.push({ text: seg.data, codeBlocks: [next.data, nextNext.data] });
+        i += 2;
+      } else if (next?.type === 'code') {
+        rows.push({ text: seg.data, codeBlocks: [next.data] });
+        i += 1;
       } else {
-        rows.push({ text: seg.data, code: null });
+        rows.push({ text: seg.data, codeBlocks: [] });
       }
     } else {
-      // Code without preceding text (edge-case) → right column only
-      rows.push({ text: null, code: seg.data });
+      rows.push({ text: null, codeBlocks: [seg.data] }); // code w/out text
     }
   }
 
   /* ── 3. Render ───────────────────────────────────────────────────────── */
-  let codeCount = 0;                  // for “Example request / Response” labels
+  let codeCount = 0; // Example request / Response labels
 
   return (
     <>
@@ -53,7 +56,7 @@ export default function ApiReferencePage({ pageData }) {
       <div className="api-grid">
         {rows.map((row, idx) => (
           <div className="api-row" key={idx}>
-            {/* left */ }
+            {/* Left column */}
             {row.text ? (
               <div className="api-markdown">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -61,17 +64,21 @@ export default function ApiReferencePage({ pageData }) {
                 </ReactMarkdown>
               </div>
             ) : (
-              <div />                  /* preserves two-column grid */
+              /* Empty div preserves the two-column grid when no text */
+              <div />
             )}
 
-            {/* right */ }
-            {row.code && (
-              <CodePanel
-                language={row.code.lang}
-                snippet={row.code.body}
-                title={codeCount++ === 0 ? 'Example request' : 'Response'}
-              />
-            )}
+            {/* Right column – stack one or two CodePanels */}
+            <div className="code-stack">
+              {row.codeBlocks?.map((block, i) => (
+                <CodePanel
+                  key={i}
+                  language={block.lang}
+                  snippet={block.body}
+                  title={i === 0 ? 'Example request' : 'Response'}
+                />
+              ))}
+            </div>
           </div>
         ))}
       </div>

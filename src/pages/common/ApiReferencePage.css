@@ -102,15 +102,21 @@
     box-shadow: 0 4px 12px rgba(0,0,0,.05);
   }
 
-  /* 5️⃣  Tables remain readable via horizontal scroll */
+  /* 5️⃣  Tables wrap instead of horizontal-scrolling */
   .api-markdown table {
-    display: block;
-    width: auto;           /* natural width, not forced 100 %      */
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    table-layout: fixed;     /* even column widths, respects wraps  */
+    overflow-x: visible;
   }
   .api-markdown th,
-  .api-markdown td { white-space: nowrap; }
+  .api-markdown td {
+    white-space: normal;     /* allow wrapping                      */
+    word-break: break-word;  /* break long tokens                   */
+    overflow-wrap: anywhere; /* extra safety                        */
+    hyphens: auto;           /* nicer word splitting when supported */
+  }
+  /* keep inline code tokens intact */
+  .api-markdown td code { white-space: nowrap; }
 }
 
 /* ------- Narrow phones ( ≤ 480 px ) -------------------------------- */
@@ -125,4 +131,17 @@
 
   .code-body { font-size: 0.8rem; }
   .api-row   { gap: 1.5rem; }
+}
+
+/* ────────────────────────────────────────────────────────────────────
+   Multiple code panels in same column (e.g. request + response)
+───────────────────────────────────────────────────────────────────── */
+.code-panel + .code-panel { margin-top: 2rem; }
+
+.api-row .code-panel:first-of-type:last-of-type { margin-bottom: 2rem; }
+
+.code-panel pre { margin: 0; }
+
+@media (max-width: 1024px) {
+  .code-panel + .code-panel { margin-top: 1.5rem; }
 }
