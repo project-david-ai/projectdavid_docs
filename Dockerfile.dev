@@ -1,0 +1,17 @@
+# ─── Dev‑only Dockerfile ──────────────────────────
+FROM node:18-alpine
+
+WORKDIR /app
+
+# 1. install deps first (cache layer)
+COPY package*.json ./
+RUN npm ci --no-audit --progress=false
+
+# 2. runtime env for hot‑reload inside the container
+ENV HOST=0.0.0.0 \
+    CHOKIDAR_USEPOLLING=true \
+    WATCHPACK_POLLING=true \
+    VITE_DEV_SERVER_FORCE_POLL=true
+
+EXPOSE 5173
+CMD ["npm", "run", "dev", "--", "--host"]

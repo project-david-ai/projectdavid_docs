@@ -44,9 +44,9 @@ the official SDK.
 
 ---
 
-|             |                                                                                                                                                                                  |
-|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Message** | Messages represent individual turns in a conversation. Each message has a role—either system, user, assistant, or tool—and all messages are stored sequentially within a thread. |
+|                                                              |                                                                                                                                                                                  |
+|--------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [**Message**](https://docs.projectdavid.co.uk/docs/Messages) | Messages represent individual turns in a conversation. Each message has a role—either system, user, assistant, or tool—and all messages are stored sequentially within a thread. |
 
 
 ---
