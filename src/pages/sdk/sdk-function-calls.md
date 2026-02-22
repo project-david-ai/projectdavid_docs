@@ -1,3 +1,9 @@
+---
+title: Function Calls
+category: sdk
+slug: sdk-function-calls
+---
+
 ## 🔧 Function Calling in Entities V1
 
 Function calls consist of **two core components**:

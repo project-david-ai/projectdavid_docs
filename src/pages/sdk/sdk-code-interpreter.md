@@ -1,3 +1,11 @@
+---
+title: Code Interpreter
+category: sdk
+slug: sdk-code-interpreter
+---
+
+
+
 # /Code Interpreter 
 
 The code interpreter tool is a secure python script execution environment that the assistant can use for data analysis.

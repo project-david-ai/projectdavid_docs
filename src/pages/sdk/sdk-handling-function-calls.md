@@ -1,3 +1,10 @@
+---
+title: File Search
+category: sdk
+slug: function-calling-and-tool-execution
+---
+
+
 # Function Calling and Tool Execution (Unified Loop)
 
 ## Overview

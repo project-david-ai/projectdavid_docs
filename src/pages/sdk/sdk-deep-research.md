@@ -1,3 +1,9 @@
+---
+title: Deep Research
+category: sdk
+slug: sdk-deep-research
+---
+
 # Deep Research
 
 Deep Research is a platform capability that orchestrates multiple assistants and tools to perform autonomous, multi-step investigation on a user’s behalf.

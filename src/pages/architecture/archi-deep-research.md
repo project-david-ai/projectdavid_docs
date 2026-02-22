@@ -2,7 +2,7 @@
 
 
 
-![Architecture Diagram](../assets/deep_research_lifecycle.svg)
+
 
 
 ### KEY ISOLATION POINTS:

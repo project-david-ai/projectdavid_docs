@@ -1,4 +1,14 @@
-## The /Computer Tool
+---
+title: Computer
+category: sdk
+slug: sdk-computer
+---
+
+
+
+
+
+## /Computer
 
 
 

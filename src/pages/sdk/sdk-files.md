@@ -1,3 +1,11 @@
+---
+title: Files
+category: sdk
+slug: sdk-files
+---
+
+
+
 # Files
 
 ## Overview

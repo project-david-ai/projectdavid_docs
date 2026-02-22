@@ -1,6 +1,16 @@
+---
+title: File Search
+category: sdk
+slug: sdk-file-search
+---
+
+
+
 # File Search
 
 ## Overview
+
+
 
 File search sits on top of the vector‑store lifecycle, but with a few important wrinkles. A vector store is a persistent, embedding‑backed database: every ingested user file is chunked, embedded into a high‑dimensional space, and indexed for approximate‑nearest‑neighbour (ANN) retrieval. File search builds on that foundation, accepting a natural‑language query, converting it into the same embedding space, then returning the *k* most similar chunks—optionally post‑filtered by any Qdrant payload expression (e.g. `{"page": {"$lte": 5}}`). In short, the lifecycle is:
 
