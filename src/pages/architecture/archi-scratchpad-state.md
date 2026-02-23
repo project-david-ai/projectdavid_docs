@@ -1,13 +1,11 @@
 
----
 
+---
 title: Scratchpad State Machine
 category: architecture
 slug: archi-scratchpad-state
 
 ---
-
-
 
 ```mermaid
 %%{init: {

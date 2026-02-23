@@ -2,6 +2,7 @@
 title: File Search
 category: sdk
 slug: sdk-file-search
+nav_exclude: true
 ---
 
 

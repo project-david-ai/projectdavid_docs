@@ -1,4 +1,10 @@
-from tkinter.font import names
+---
+title: Assistants
+category: sdk
+slug: sdk-assistants
+nav_order: 2
+---
+
 
 # Assistants
 
@@ -43,5 +49,4 @@ client.assistants.update_assistant(
 # Delete an assistant 
 
 client.assistants.delete_assistant(assistant_id=assistant.id)
-
 ```

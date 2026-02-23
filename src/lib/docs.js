@@ -1,13 +1,14 @@
 /* ──────────────────────────────────────────────────────────────
    src/lib/docs.js
    – collect markdown pages, expose `pages` map + grouped nav list
-   – now supports explicit slug + optional nav_exclude
+   – supports explicit slug, nav_order, and optional nav_exclude
    ──────────────────────────────────────────────────────────── */
 
 const categoryDisplayNames = {
-  'get-started'   : 'GET STARTED',
-  'core-concepts' : 'CORE CONCEPTS',
-  'api-guides'    : 'API GUIDES',
+  'sdk'           : 'SDK',
+  'endpoints'     : 'API ENDPOINTS',
+  'infrastructure': 'INFRASTRUCTURE',
+  'architecture'  : 'ARCHITECTURE',
 };
 
 /* ----------  tiny front-matter parser (keeps bundle slim)  ---------- */
@@ -31,7 +32,6 @@ const mdModules = import.meta.glob('../pages/**/*.md', { as: 'raw', eager: true 
 export const pages = Object.entries(mdModules).reduce((acc, [path, raw]) => {
   const { data, content } = simpleMatter(raw);
 
-  // explicit slug > filename fallback
   const slug = (data.slug || path.split('/').pop().replace('.md', '')).trim();
 
   acc[slug] = { frontmatter: data, content };
@@ -43,25 +43,31 @@ export const groupedNavItems = {};
 
 Object.entries(mdModules).forEach(([path, raw]) => {
   const { data } = simpleMatter(raw);
-  if (data.nav_exclude === 'true') return;          // hide from sidebar if asked
+  if (data.nav_exclude === 'true') return;
 
-  const slug  = (data.slug || path.split('/').pop().replace('.md', '')).trim();
-  const parts = path.split('/');
-  const category = data.category || parts[parts.length - 2]; // parent folder
+  const slug     = (data.slug || path.split('/').pop().replace('.md', '')).trim();
+  const parts    = path.split('/');
+  const category = data.category || parts[parts.length - 2];
 
   if (!groupedNavItems[category]) groupedNavItems[category] = [];
 
   groupedNavItems[category].push({
     slug,
-    route: `/docs/${slug}`,
-    label:
+    route    : `/docs/${slug}`,
+    nav_order: data.nav_order !== undefined ? Number(data.nav_order) : undefined,
+    label    :
       data.title
-        ? data.title.replace(/<[^>]+>/g, '')         // strip any markup
+        ? data.title.replace(/<[^>]+>/g, '')
         : slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
   });
 });
 
-/* tidy alphabetical order within each category */
+/* ----------  4. sort each category by nav_order, then alphabetically  ---------- */
 Object.values(groupedNavItems).forEach(arr =>
-  arr.sort((a, b) => a.label.localeCompare(b.label))
+  arr.sort((a, b) => {
+    const orderA = a.nav_order !== undefined ? a.nav_order : 999;
+    const orderB = b.nav_order !== undefined ? b.nav_order : 999;
+    if (orderA !== orderB) return orderA - orderB;
+    return a.label.localeCompare(b.label);
+  })
 );

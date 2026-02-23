@@ -1,3 +1,9 @@
+---
+title: Inference
+category: sdk
+slug: sdk-inference
+nav_order: 6
+---
 
 
 

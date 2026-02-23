@@ -1,4 +1,12 @@
-## The /Web Search Tool
+---
+title: Web Search
+category: sdk
+slug: sdk-Web-Search
+nav_exclude: true
+---
+
+
+## The /Web Search
 
 
 The web search tool gives the assistant real-time read access to the World Wide Web.

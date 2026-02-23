@@ -1,6 +1,7 @@
 ---
 layout: api
 title: Assistants
+category: endpoints
 ---
 
 Build an assistant with access to tools to perform tasks.

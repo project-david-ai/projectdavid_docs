@@ -1,3 +1,9 @@
+---
+title: Stream Contract
+category: sdk
+slug: sdk-stream-contract
+---
+
 # Event Contract — Streaming Protocol
 
 This document defines the event types emitted by the platform over the streaming

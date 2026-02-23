@@ -114,3 +114,58 @@
     font-size: 0.9rem;
   }
 }
+
+/* ============================================================
+   Category-scoped overrides
+   Applied via .markdown-{category} on the wrapper div
+   ============================================================ */
+
+/* Architecture — diagram-heavy pages, needs more breathing room */
+.markdown-architecture {
+  max-width: 1200px;
+}
+
+.markdown-architecture .mermaid {
+  margin: 2rem 0;
+}
+
+/* SDK — code-heavy pages, keep tight readable column */
+.markdown-sdk {
+  max-width: 860px;
+}
+
+.markdown-sdk code {
+  font-size: 0.9rem;
+}
+
+/* Infrastructure — mixed prose and code, default width is fine */
+.markdown-infrastructure h2 {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.4rem;
+}
+
+/* Endpoints — API reference, slightly wider for param tables */
+.markdown-endpoints {
+  max-width: 1080px;
+}
+
+.markdown-endpoints table {
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.markdown-endpoints th {
+  background-color: #f1f5f9;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+/* ── Inline code ─────────────────────────────────────────────── */
+.markdown-body :not(pre) > code {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

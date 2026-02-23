@@ -1,3 +1,11 @@
+---
+title: Vector Store
+category: sdk
+slug: sdk-Vector-Store
+nav_order: 10
+---
+
+
 
 # Vector Store
 ## Overview

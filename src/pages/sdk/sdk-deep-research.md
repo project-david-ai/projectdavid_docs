@@ -2,6 +2,7 @@
 title: Deep Research
 category: sdk
 slug: sdk-deep-research
+nav_exclude: true
 ---
 
 # Deep Research

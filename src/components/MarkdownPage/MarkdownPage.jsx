@@ -1,3 +1,5 @@
+// src/components/MarkdownPage/MarkdownPage.jsx
+
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useEffect, useRef } from 'react';
@@ -30,9 +32,9 @@ function MermaidBlock({ chart }) {
   return <div className="mermaid" ref={ref} />;
 }
 
-export default function MarkdownPage({ content }) {
+export default function MarkdownPage({ content, category }) {
   return (
-    <div className="markdown-body">
+    <div className={`markdown-body ${category ? `markdown-${category}` : ''}`}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -40,11 +42,14 @@ export default function MarkdownPage({ content }) {
             const match = /language-(\w+)/.exec(className || '');
             const language = match ? match[1] : 'plaintext';
 
-            if (inline) {
+            // Robust inline detection — treat as inline if flagged OR
+            // if content has no newline (catches single-line fragments in lists)
+            const isBlock = !inline && String(children).includes('\n');
+
+            if (!isBlock) {
               return <code className={className} {...props}>{children}</code>;
             }
 
-            // Intercept mermaid blocks
             if (language === 'mermaid') {
               return <MermaidBlock chart={String(children).replace(/\n$/, '')} />;
             }

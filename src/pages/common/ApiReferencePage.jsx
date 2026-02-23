@@ -1,3 +1,5 @@
+// src/pages/common/ApiReferencePage.jsx
+
 import ReactMarkdown from 'react-markdown';
 import remarkGfm     from 'remark-gfm';
 import CodePanel     from '../../components/CodePanel/CodePanel.jsx';
@@ -8,7 +10,7 @@ export default function ApiReferencePage({ pageData }) {
 
   /* ── 1. Split markdown into TEXT / CODE segments ─────────────────────── */
   const codeRegex = /^```(\w*)\r?\n([\s\S]*?)\r?\n```/gm;
-  const segments  = [];                 // { type: 'text' | 'code', data }
+  const segments  = [];
   let lastIdx = 0, match;
 
   for (match of content.matchAll(codeRegex)) {
@@ -42,13 +44,11 @@ export default function ApiReferencePage({ pageData }) {
         rows.push({ text: seg.data, codeBlocks: [] });
       }
     } else {
-      rows.push({ text: null, codeBlocks: [seg.data] }); // code w/out text
+      rows.push({ text: null, codeBlocks: [seg.data] });
     }
   }
 
   /* ── 3. Render ───────────────────────────────────────────────────────── */
-  let codeCount = 0; // Example request / Response labels
-
   return (
     <>
       <h1 className="api-title">{frontmatter.title ?? 'API Reference'}</h1>
@@ -56,7 +56,6 @@ export default function ApiReferencePage({ pageData }) {
       <div className="api-grid">
         {rows.map((row, idx) => (
           <div className="api-row" key={idx}>
-            {/* Left column */}
             {row.text ? (
               <div className="api-markdown">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -64,11 +63,9 @@ export default function ApiReferencePage({ pageData }) {
                 </ReactMarkdown>
               </div>
             ) : (
-              /* Empty div preserves the two-column grid when no text */
               <div />
             )}
 
-            {/* Right column – stack one or two CodePanels */}
             <div className="code-stack">
               {row.codeBlocks?.map((block, i) => (
                 <CodePanel

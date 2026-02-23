@@ -2,6 +2,7 @@
 title: Computer
 category: sdk
 slug: sdk-computer
+nav_exclude: true
 ---
 
 

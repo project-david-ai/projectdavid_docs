@@ -90,6 +90,28 @@
   }
 }
 
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.sidebar-header:hover {
+  color: #475569;
+}
+
 /* Disable hover transitions for touch devices */
 @media (hover: none) {
   .sidebar-link:hover { background: none; }
