@@ -106,7 +106,6 @@ def main():
     
     try:
         for chunk in sync_stream.stream_chunks(
-            provider=PROVIDER,
             model=MODEL,
             timeout_per_chunk=60.0,
             suppress_fc=True,

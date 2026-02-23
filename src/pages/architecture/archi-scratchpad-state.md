@@ -4,6 +4,7 @@
 title: Scratchpad State Machine
 category: architecture
 slug: archi-scratchpad-state
+nav_order: 4
 
 ---
 

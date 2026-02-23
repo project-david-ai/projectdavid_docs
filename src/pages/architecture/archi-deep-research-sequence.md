@@ -3,6 +3,7 @@
 title: Deep Research Sequence
 category: architecture
 slug: archi-deep-research-sequence
+nav_order: 3
 
 ---
 

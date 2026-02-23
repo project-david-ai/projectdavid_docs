@@ -5,15 +5,27 @@
    ──────────────────────────────────────────────────────────── */
 
 const categoryDisplayNames = {
+  'overview'      : 'OVERVIEW',
   'sdk'           : 'SDK',
   'endpoints'     : 'API ENDPOINTS',
+  'providers'     : 'PROVIDERS',
   'infrastructure': 'INFRASTRUCTURE',
   'architecture'  : 'ARCHITECTURE',
 };
 
+const categoryOrder = {
+  'overview'      : 1,
+  'sdk'           : 2,
+  'endpoints'     : 3,
+  'providers'     : 4,
+  'infrastructure': 5,
+  'architecture'  : 6,
+};
+
 /* ----------  tiny front-matter parser (keeps bundle slim)  ---------- */
 function simpleMatter(raw) {
-  const fm = /^---\r?\n([\s\S]+?)\r?\n---(\r?\n|$)/;
+  // Updated regex to handle invisible BOM characters, leading empty lines, or trailing spaces
+  const fm = /^\s*---[ \t]*\r?\n([\s\S]+?)\r?\n---[ \t]*(\r?\n|$)/;
   const m  = fm.exec(raw);
   if (!m) return { data: {}, content: raw };
 
@@ -72,3 +84,10 @@ Object.values(groupedNavItems).forEach(arr =>
     return a.label.localeCompare(b.label);
   })
 );
+
+/* ----------  5. export category keys in explicit order  ---------- */
+export const sortedGroupKeys = Object.keys(groupedNavItems).sort((a, b) => {
+  const orderA = categoryOrder[a] ?? 999;
+  const orderB = categoryOrder[b] ?? 999;
+  return orderA - orderB;
+});

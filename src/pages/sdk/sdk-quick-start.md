@@ -11,6 +11,8 @@ nav_order: 1
 
 > The synchronous streaming interface is considered legacy. It will continue to function, but the event-driven interface is recommended for all new implementations.
 
+For a full list of supported model endpoint IDs, see the [Model Compatibility Report](/docs/providers-Model-Compatibility-Report).
+
 ```python
 import os
 from dotenv import load_dotenv
@@ -68,6 +70,8 @@ for chunk in stream.stream_chunks(
 > Level 2 and Level 3 agentic capabilities and separates reasoning from content events,
 > allowing each to be handled independently before rendering in your application.
 
+Swap `PROVIDER` and `MODEL` for any entry from the [Model Compatibility Report](/docs/providers-Model-Compatibility-Report).
+
 ```python
 import os
 from dotenv import load_dotenv
@@ -115,7 +119,7 @@ stream.setup(
 
 current_mode = None
 
-for event in stream.stream_events(provider=PROVIDER, model=MODEL):
+for event in stream.stream_events(model=MODEL):
 
     if isinstance(event, ReasoningEvent):
         if current_mode != "reasoning":

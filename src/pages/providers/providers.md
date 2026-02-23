@@ -9,6 +9,11 @@ slug: providers-Model-Compatibility-Report
 #  Model Compatibility Report
 **Last Update:** 2026-02-06 21:30:45
 
+
+The following model endpoints are tested and supported by Project David.
+Copy your desired endpoint ID directly into the `model` parameter of your stream handler.
+For configuration details, see the [Inference guide](/docs/sdk-inference).
+
 ## 🟢 Provider: hyperbolic
 | Model Name | Provider | Endpoint ID | Inference | Reasoning | Tools | Parallel | Telemetry | Last Run | Notes |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :--- |

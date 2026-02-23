@@ -2,7 +2,7 @@
 title: Assistant Cache
 category: architecture
 slug: archi-assistant-cache
-
+nav_order: 2
 ---
 
 

@@ -2,6 +2,7 @@
 title: Code Interpreter Flow
 category: architecture
 slug: archi-code-interpreter-flow
+nav_order: 1
 ---
 
 ```mermaid

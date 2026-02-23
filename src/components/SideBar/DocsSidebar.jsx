@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
-import { groupedNavItems } from '../../lib/docs';
+import { groupedNavItems, sortedGroupKeys } from '../../lib/docs';
 import './DocsSidebar.css';
 
 const categoryDisplayNames = {
+  'overview'      : 'OVERVIEW',
   'sdk'           : 'SDK',
   'endpoints'     : 'API ENDPOINTS',
+  'providers'     : 'PROVIDERS',
   'infrastructure': 'INFRASTRUCTURE',
   'architecture'  : 'ARCHITECTURE',
 };
@@ -78,11 +80,11 @@ export default function DocsSidebar() {
           <X size={22} strokeWidth={2} />
         </button>
 
-        {Object.entries(groupedNavItems).map(([groupKey, items]) => (
+        {sortedGroupKeys.map(groupKey => (
           <SidebarGroup
             key={groupKey}
             groupKey={groupKey}
-            items={items}
+            items={groupedNavItems[groupKey]}
             onNavClick={() => setOpen(false)}
             defaultOpen={false}
           />
