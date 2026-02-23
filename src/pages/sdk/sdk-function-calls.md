@@ -100,8 +100,7 @@ print("Stream started...")
 # It pauses only when it needs YOU to execute a tool.
 # ----------------------------------------------------
 try:
-    for event in stream.stream_events(
-        provider="Hyperbolic", 
+    for event in stream.stream_events( 
         model="hyperbolic/deepseek-ai/DeepSeek-V3"
     ):
         
