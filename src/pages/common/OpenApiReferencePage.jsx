@@ -1,46 +1,40 @@
 // src/pages/common/OpenApiReferencePage.jsx
-
-import { useEffect, useState } from 'react';
-import { API } from '@stoplight/elements';
-import '@stoplight/elements/styles.min.css';
 import './ApiReferencePage.css';
 
 const OPENAPI_URL = import.meta.env.VITE_OPENAPI_URL || 'http://localhost:9000/openapi.json';
 
 export default function OpenApiReferencePage() {
-  const [ready, setReady] = useState(false);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetch(OPENAPI_URL)
-      .then(res => {
-        if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
-        return res.json();
-      })
-      .then(() => setReady(true))
-      .catch(err => setError(err.message));
-  }, []);
-
-  if (error) {
-    return (
-      <div className="api-reference-error">
-        <p>Could not load API spec from <code>{OPENAPI_URL}</code></p>
-        <p>{error}</p>
-      </div>
-    );
-  }
-
-  if (!ready) {
-    return <div className="api-reference-loading">Loading API reference...</div>;
-  }
+  // We write the HTML directly here. No external file needed!
+  // This uses Redoc to render the OpenAPI spec beautifully.
+  const iframeHtml = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>API Reference</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+          body { margin: 0; padding: 0; }
+        </style>
+      </head>
+      <body>
+        <div id="redoc-container"></div>
+        <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+        <script>
+          // Initialize Redoc with your FastAPI URL
+          Redoc.init('${OPENAPI_URL}', {}, document.getElementById('redoc-container'));
+        </script>
+      </body>
+    </html>
+  `;
 
   return (
     <div className="api-reference-wrap">
-      <API
-        apiDescriptionUrl={OPENAPI_URL}
-        router="hash"
-        layout="sidebar"
-        hideInternal={true}
+      <iframe
+        srcDoc={iframeHtml}
+        style={{ width: '100%', height: '100%', border: 'none' }}
+        title="API Reference"
       />
     </div>
   );

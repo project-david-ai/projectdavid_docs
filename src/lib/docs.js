@@ -13,14 +13,15 @@ const categoryDisplayNames = {
 
 /* ----------  tiny front-matter parser (keeps bundle slim)  ---------- */
 function simpleMatter(raw) {
-  const fm = /^---\r?\n([\s\S]+?)\r?\n---\r?\n/;
+  const fm = /^---\r?\n([\s\S]+?)\r?\n---(\r?\n|$)/;
   const m  = fm.exec(raw);
   if (!m) return { data: {}, content: raw };
 
   const data = {};
   m[1].split('\n').forEach(line => {
-    const i = line.indexOf(':');
-    if (i > -1) data[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+    const stripped = line.replace(/\r$/, '');
+    const i = stripped.indexOf(':');
+    if (i > -1) data[stripped.slice(0, i).trim()] = stripped.slice(i + 1).trim();
   });
   return { data, content: raw.slice(m[0].length) };
 }
